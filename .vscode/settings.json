@@ -1,0 +1,4 @@
+{
+    "inlineSQL.dbDriver": "postgres",
+    "inlineSQL.lintSQLFiles": true
+}
