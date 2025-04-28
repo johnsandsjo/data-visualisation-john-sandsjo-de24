@@ -19,6 +19,5 @@ def save_fig_from_ax(ax, save_path):
     fig.tight_layout()
     fig.savefig(save_path)
 
-def thousand_formatter(val,axis):
-    
-    return f'{int(val/1000)}K'
+def formatter(val,pos):
+     return f'{int(val/1000)}K'

@@ -1,4 +1,6 @@
 {
     "inlineSQL.dbDriver": "postgres",
-    "inlineSQL.lintSQLFiles": true
+    "inlineSQL.lintSQLFiles": true,
+    "notebook.defaultFormatter": "ms-python.black-formatter",
+    "editor.defaultFormatter": "ms-python.black-formatter"
 }
