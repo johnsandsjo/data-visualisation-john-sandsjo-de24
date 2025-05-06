@@ -13,8 +13,7 @@ number2 = 10
 sum_ = number1 + number2
 
 def perform_calculation(state):
-    print(state.number1)
-
+    #print(state.number1)
     state.sum_ = int(state.number1) + int(state.number2)
 
 def clear_results(state):
