@@ -9,15 +9,15 @@ user_input = "your palindrome..."
 image_path = ""
 cat_image = "assets/fake_cat.png"
 rabbit_image = "assets/fake_sad_rabbit.png"
-score = 0
+score = ""
 
 def palindrome_check(state):
     if state.user_input == state.user_input[::-1]:
         state.image_path = cat_image
-        state.score +=1 
+        state.score += "⭐️"
     else:
         state.image_path = rabbit_image
-        state.score -=1
+        state.score = state.score[:-2]
 
 
 with tgb.Page() as page:
@@ -30,7 +30,7 @@ with tgb.Page() as page:
     tgb.text("Your word: {user_input}")
     tgb.image("{image_path}")
 
-    tgb.text("### Your score: {score}", mode="md")
+    tgb.text("### Streak: {score} ", mode="md")
 
 
 if __name__ == '__main__':
