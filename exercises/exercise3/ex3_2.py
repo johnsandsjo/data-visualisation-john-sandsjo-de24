@@ -77,13 +77,5 @@ with tgb.Page() as page:
 
 
 
-style = """
-.container card {
-    display: narrow;
-    flex-direction: column; /* Arrange items vertically */
-    width: 100%; /* Make it take full width of its parent */
-    align-items: stretch; /* Ensure children stretch to full width */
-}"""
-
 if __name__ == '__main__':
     Gui(page).run(dark_mode=False, use_reloader=True, port=8080)
