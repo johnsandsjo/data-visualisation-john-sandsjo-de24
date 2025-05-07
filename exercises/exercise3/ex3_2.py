@@ -48,34 +48,41 @@ with tgb.Page() as page:
     with tgb.part(class_name="container card"):
         tgb.text("# Dices simulations", mode="md")
 
-    with tgb.layout(columns="0.5 0.5"):
-        with tgb.part(class_name="card"):
-            tgb.table("{df}", rebuild=True, page_size=10)
-            tgb.text("Number of dices chosen {num_dices}")
-            tgb.slider("{num_dices}", min= 1, max=10, continuous=False)
-            tgb.text("Number of throws {throws}")
-            tgb.slider("{throws}", min= 1, max=3000, continuous=False)
-
-            tgb.button("SIMULATE", on_action=update_state)
-
-            
-        with tgb.part(class_name="card"):
-            with tgb.layout(columns="1 1 1"):
-                with tgb.part(class_name="card"):
-                    tgb.text("Theroetical mean")
-                    tgb.text("## 3.5", mode="md")
-                with tgb.part(class_name="card"):
-                    tgb.text("Calculated mean")
-                    tgb.text("## {the_mean:.4f}", mode="md")
-                with tgb.part(class_name="card"):
-                    tgb.text("Difference mean")
-                    tgb.text("## {diff:.4f}", mode = "md")
+    with tgb.part(class_name="container card"):
+        with tgb.layout(columns="1 1"):
             with tgb.part(class_name="card"):
-                tgb.text("Mean value of {num_dices} for {throws} throws")
-                tgb.chart(figure = "{fig}")
-                tgb.text("This histogram have been calculated through taking mean values for each throw")
+                tgb.table("{df}", rebuild=True, page_size=10)
+                tgb.text("Number of dices chosen {num_dices}")
+                tgb.slider("{num_dices}", min= 1, max=10, continuous=False)
+                tgb.text("Number of throws {throws}")
+                tgb.slider("{throws}", min= 1, max=3000, continuous=False)
+
+                tgb.button("SIMULATE", on_action=update_state)
+
+                
+            with tgb.part(class_name="container card"):
+                with tgb.layout(columns="1 1 1"):
+                    with tgb.part(class_name="card"):
+                        tgb.text("Theroetical mean")
+                        tgb.text("## 3.5", mode="md")
+                    with tgb.part(class_name="card"):
+                        tgb.text("Calculated mean")
+                        tgb.text("## {the_mean:.4f}", mode="md")
+                    with tgb.part(class_name= "card"):
+                        tgb.text("Difference mean")
+                        tgb.text("## {diff:.4f}", mode = "md")
+                with tgb.part(class_name="card"):
+                    tgb.text("Mean value of {num_dices} for {throws} throws")
+                    tgb.chart(figure = "{fig}")
+                    tgb.text("This histogram have been calculated through taking mean values for each throw")
 
 
+style = """
+.card {
+    margin: 100px;
+    padding: 100px;
+}
+"""
 
 if __name__ == '__main__':
     Gui(page).run(dark_mode=False, use_reloader=True, port=8080)
