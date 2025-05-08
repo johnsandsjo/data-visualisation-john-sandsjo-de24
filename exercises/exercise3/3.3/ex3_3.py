@@ -19,7 +19,6 @@ def stater(state):
     global df
     state.fig = bar_year(df, state.year)
     state.fig4 = map_life_exp(df, state.continento.lower())
-    #print(state.continent)
 
 def map_life_exp(df, continento):
     continento = continento.lower()
@@ -43,11 +42,11 @@ def bar_year(df, year):
                  )
     return fig
 
-def line_plotter(df, metric):
-    if metric == "avg_gdp_person":
+def line_plotter(df, **options):
+    if options.get('metric') == "avg_gdp_person":
         title="Yearly average GDP per person per continent"
         yen = "Avg life expectancy"
-    elif metric == "avg_life_exp":
+    elif options.get('metric') == "avg_life_exp":
         title="Yearly average life expectancy per continent"
         yen = "Avg GDP per person"
     else:
@@ -56,7 +55,7 @@ def line_plotter(df, metric):
 
     fig = px.line(df, 
               x= "year", 
-              y=metric, 
+              y=options.get('metric'), 
               color="continent", 
               title=title,
               labels=dict(continent= "Continent", ylabel = yen, year = "Year")
@@ -84,8 +83,8 @@ def map_life_exp(df, continento="europe"):
 year = 2007
 continento = "asia"
 fig = bar_year(df, year)
-fig2 = line_plotter(df_continent, 'avg_life_exp')
-fig3 = line_plotter(df_continent, 'avg_gdp_person')
+fig2 = line_plotter(df_continent, metric = 'avg_life_exp')
+fig3 = line_plotter(df_continent, metric = 'avg_gdp_person')
 fig4 = map_life_exp(df, continento)
 
 

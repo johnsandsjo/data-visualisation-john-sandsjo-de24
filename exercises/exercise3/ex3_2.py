@@ -50,7 +50,7 @@ with tgb.Page() as page:
 
     with tgb.part(class_name="container card"):
         with tgb.layout(columns="1 1"):
-            with tgb.part(class_name="card"):
+            with tgb.part(class_name="container card"):
                 tgb.table("{df}", rebuild=True, page_size=10)
                 tgb.text("Number of dices chosen {num_dices}")
                 tgb.slider("{num_dices}", min= 1, max=10, continuous=False)
@@ -60,7 +60,7 @@ with tgb.Page() as page:
                 tgb.button("SIMULATE", on_action=update_state)
 
                 
-            with tgb.part(class_name="container card"):
+            with tgb.part(class_name="container"):
                 with tgb.layout(columns="1 1 1"):
                     with tgb.part(class_name="card"):
                         tgb.text("Theroetical mean")
