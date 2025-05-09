@@ -17,7 +17,6 @@ def filter_df_municipality(df, educational_area="Data/IT"):
     )
 
 def filter_data(state):
-    print(state)
     df_municipality = filter_df_municipality(state.df, state.selected_educational_area)
 
     state.municipality_chart = create_municipality_bar(
@@ -25,9 +24,14 @@ def filter_data(state):
         xlabel="# ANSÖKTA UTBILDNINGAR",
         ylabel="KOMMUN",
     )
+    state.municipalities_title = state.number_municipalities
+    state.educational_area_chart_title = state.selected_educational_area
 
 number_municipalities = 5
 selected_educational_area = "Data/IT"
+
+municipalities_title = number_municipalities
+educational_area_chart_title = selected_educational_area
 
 df_municipilaty = filter_df_municipality(df, selected_educational_area).head(number_municipalities)
 
@@ -35,23 +39,24 @@ municipality_chart = create_municipality_bar(df_municipilaty, xlabel="# Ansökta
 
 
 with tgb.Page() as page:
-    with tgb.part(class_name="container card"):
+    with tgb.part(class_name="container card stack"):
         tgb.text("# MYH Dashboard 2024", mode = "md")
 
         with tgb.layout(columns="2 1"):
             with tgb.part(class_name="card"):
-                tgb.text("### Graf", mode="md")
+                tgb.text("### Antalet ansökta YH-utbildningar per kommun (topp{municipalities_title}) för {educational_area_chart_title}", 
+                         class_name="title-chart",
+                         mode="md")
                 tgb.chart(figure = "{municipality_chart}")
 
-            with tgb.part(class_name="card"):
+            with tgb.part(class_name="card left-margin-medium"):
                 tgb.text("### Filter", mode="md")
                 tgb.text("Filtrera antalet kommuner", mode="md")
                 tgb.slider(
                     "{number_municipalities}", 
                     min=5, 
-                    max=len(df_municipilaty), 
+                    max=len(filter_df_municipality(df)),
                     continuous=False,
-                    #on_change=filter_data
                     )
                 
                 tgb.text("Välj utbildningsområde")
@@ -61,7 +66,7 @@ with tgb.Page() as page:
                     dropdown=True
                 )
 
-                tgb.button("FILTRERA DATA", class_name="plain", on_action=filter_data)
+                tgb.button("FILTRERA DATA", class_name="button-color", on_action=filter_data)
 
         
         with tgb.part(class_name="card"):
@@ -69,4 +74,4 @@ with tgb.Page() as page:
             tgb.table("{df}")
 
 if __name__ == '__main__':
-    Gui(page).run(dark_mode=False, use_reloader=True, port=8080)
+    Gui(page, css_file="assets/main.css").run(dark_mode=False, use_reloader=True, port=8080)
