@@ -13,13 +13,23 @@ df_slim = pd.read_csv("nordic_company_ranking.csv")[["Rank", "Company", "Industr
 df["Headquarters"] = df["Headquarters"].str.split(",")
 df["Headquarters"] = df["Headquarters"].str[-1].str.strip()
 
+flag_map = {
+    "Sweden": "🇸🇪",
+    "Denmark": "🇩🇰",
+    "Norway": "🇳🇴",
+    "Finland": "🇫🇮",
+    "Iceland": "🇮🇸"
+}
+
+df["Headquarters with flag"] = df["Headquarters"].map(lambda country: f"{country} {flag_map.get(country, '')}")
+
 
 def grouper(top_list):
     group_df = duckdb.query(f"""--sql
-        SELECT Headquarters as Country, count("Company") as num_companies
-        FROM df
-        GROUP BY Headquarters
-                            LIMIT {top_list}
+        SELECT "Headquarters with flag" as Country, count("Company") as num_companies
+        FROM (SELECT * FROM df LIMIT {top_list})
+        GROUP BY "Headquarters with flag"
+        ORDER BY num_companies DESC
         """).df()
     return group_df
 
@@ -28,7 +38,7 @@ def filter_table(df, industry="Banking"):
 
 def update_table(state):
     state.df_industry = filter_table(df_slim, state.industry_selector)
-    group_df = state.grouper(state.top_list) 
+    state.group_df = grouper(state.top_list) 
 
 def graph_plotter():
     fig = px.bar(
@@ -66,13 +76,14 @@ with tgb.Page() as page:
     with tgb.part(class_name="container card"):
         with tgb.layout(columns= "2 1"):
             with tgb.part(class_name="card"):
-                tgb.text("### Table of top by country", mode="md")
+                tgb.text("### Number of countries among top {top_list}", mode="md")
                 tgb.table("{group_df}")
             with tgb.part(class_name="card"):
                 tgb.slider(
                     "{top_list}", 
                     min=5, 
                     max=50,
+                    step=5,
                     continuous=False,
                     on_change=update_table
                     )
