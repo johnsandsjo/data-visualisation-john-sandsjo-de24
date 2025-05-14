@@ -1,18 +1,8 @@
 @import "variables.css";
 @import "layout-primitives.css";
+@import "responsive_screens.css";
+@import "text.css";
 
-
-h1, h2, h3, p {
-    color: var(--primaryColor);
-}
-
-h1 {
-    font-size: var(--s2);
-}
-
-h2 {
-    font-size: var(--s1);
-}
 
 .button-color {
     background-color: brown;

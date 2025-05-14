@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Playwrite+DK+Loopet:wght@100..400&display=swap');
+
+h1, h2, h3, p, .title-chart, .taipy-text {
+    font-family: "Caveat", "sans-serif";
+    color: var(--primaryColor);
+}
+
+h1 {
+    font-size: var(--s2);
+}
+
+h2 {
+    font-size: var(--s1);
+}
+
+.max-text-width {
+    max-width: 70ch;
+}
+
+.title-chart h2 {
+    font-size: var(--s1);
+    margin-left: var(--s4);
+}
