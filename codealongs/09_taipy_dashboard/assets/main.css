@@ -12,3 +12,7 @@
 .left-margin-medium {
     margin-left: var(--s0)
 }
+
+.the_header  {
+    background-color: yellow;
+}
